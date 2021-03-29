@@ -27,7 +27,26 @@
 function getFileHandle() {
   // For Chrome 86 and later...
   if ('showOpenFilePicker' in window) {
-    return window.showOpenFilePicker().then((handles) => handles[0]);
+    const pickerOpts = {
+      types: [
+        {
+          description: 'API Notebook',
+          accept: {
+            'text/markdown': ['.notebook.md']
+          }
+        },
+        {
+          description: 'Markdown',
+          accept: {
+            'text/markdown': ['.md']
+          }
+        },
+
+      ],
+      excludeAcceptAllOption: true,
+      multiple: false
+    };
+    return window.showOpenFilePicker(pickerOpts).then((handles) => handles[0]);
   }
   // For Chrome 85 and earlier...
   return window.chooseFileSystemEntries();
@@ -43,9 +62,12 @@ function getNewFileHandle() {
   if ('showSaveFilePicker' in window) {
     const opts = {
       types: [{
-        description: 'Text file',
-        accept: {'text/plain': ['.txt']},
-      }],
+        description: 'API Notebook',
+        accept: {'text/markdownn': ['.notebook.md']},
+      },{
+        description: 'Markdown',
+        accept: {'text/markdownn': ['.md']},
+      }]
     };
     return window.showSaveFilePicker(opts);
   }

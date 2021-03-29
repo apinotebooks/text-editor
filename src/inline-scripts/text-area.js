@@ -19,17 +19,18 @@
 (function(app) {
   const textArea = document.getElementById('textEditor');
 
-  /* Setup the main textarea */
+/*
+  // Setup the main textarea 
   textArea.addEventListener('input', () => {
     app.setModified(true);
   });
 
-  /* Hide menus any time we start typing */
+  // Hide menus any time we start typing 
   textArea.addEventListener('focusin', () => {
     myMenus.hideAll();
   });
 
-  /* Listen for tab key */
+  // Listen for tab key 
   textArea.addEventListener('keydown', (e) => {
     if (e.key === 'Tab' && app.options.captureTabs) {
       e.preventDefault();
@@ -37,12 +38,12 @@
     }
   });
 
-  /* Initialize the textarea, set focus & font size */
+  // Initialize the textarea, set focus & font size 
   window.addEventListener('DOMContentLoaded', () => {
     textArea.style.fontSize = `${app.options.fontSize}px`;
     app.setFocus();
   });
-
+*/
 
   /**
    * Sets the text of the editor to the specified value
@@ -51,7 +52,18 @@
    */
   app.setText = (val) => {
     val = val || '';
-    textArea.value = val;
+    const mount = document.querySelector("#notebookEditor");
+    mount.innerHTML="";
+    const el = new StarboardNotebookIFrame({
+        notebookContent: val,
+        src: "https://apinotebooks-sandbox.netlify.app"
+    });
+
+    el.style.width = "100%";
+    el.id="notebookSandbox";
+    mount.appendChild(el);
+    
+    // textArea.value = val;
   };
 
   /**
@@ -60,7 +72,9 @@
    * @return {string}
    */
   app.getText = () => {
-    return textArea.value;
+    var sb = document.getElementById("notebookSandbox");
+    var content = sb?.notebookContent || "";    
+    return content;
   };
 
   /**
@@ -69,6 +83,7 @@
    * @param {string} contents Contents to insert into the document.
    */
   app.insertIntoDoc = (contents) => {
+    debugger;
     // Find the current cursor position
     const startPos = textArea.selectionStart;
     const endPos = textArea.selectionEnd;
@@ -108,11 +123,13 @@
    * @param {boolean} startAtTop
    */
   app.setFocus = (startAtTop) => {
+    /*
     if (startAtTop) {
       textArea.selectionStart = 0;
       textArea.selectionEnd = 0;
       textArea.scrollTo(0, 0);
     }
     textArea.focus();
+    */
   };
 })(app);

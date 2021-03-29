@@ -65,17 +65,23 @@
     <link rel="stylesheet" href="/styles/standalone.css" inline>
     <link rel="stylesheet" media="print" href="/styles/print.css" inline>
 
-    <!-- Origin Trial Token NFS API v1 (expires 2020-05-12) -->
+    <script type="module">
+      import {StarboardNotebookIFrame} from "../libs/notebook-sandbox.js"
+      window.StarboardNotebookIFrame = StarboardNotebookIFrame;
+    </script>
+
+    <!-- Origin Trial Token NFS API v1 (expires 2020-05-12) - ->
     <meta http-equiv="origin-trial" content="ApP5hRHS+dIxGdu/1psSHsErxROE+aVFGqdUwBgrcsGuwWDpPo3iqanpH3EdEie7YHhBN0LL1sdkT89waJPbzwsAAABkeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZWNocm9tZWxhYnMuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJOYXRpdmVGaWxlU3lzdGVtIiwiZXhwaXJ5IjoxNTg5MzI3OTk5fQ==">
-    <!-- Origin Trial Token NFS API v2 (expires 2020-05-25) -->
+    <!-- Origin Trial Token NFS API v2 (expires 2020-05-25) - ->
     <meta http-equiv="origin-trial" content="AouXz9/sqzYGRIFkw8KK0QXp0HOo99+Pg8NAr/4pRA1pAlaTeQ6BngqqkBUzfjvxzPcRf15pmieR4RDhJB9bKwAAAABleyJvcmlnaW4iOiJodHRwczovL2dvb2dsZWNocm9tZWxhYnMuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJOYXRpdmVGaWxlU3lzdGVtMiIsImV4cGlyeSI6MTU5MDQxNzc1NX0=">
+    -->
   </head>
   <body class="wordwrap">
 
     <header>
       <h1>
-        <span id="headerFileName">Text Editor</span><span id="modifiedHeader" class="hidden">*</span>
-        <span id="headerAppName" class="hidden"> - Text Editor</span>
+        <span id="headerFileName">API Notebook</span><span id="modifiedHeader" class="hidden">*</span>
+        <span id="headerAppName" class="hidden"> - API Notebook</span>
       </h1>
       <nav class="menubar">
         <div id="menuFile" class="menuContainer">
@@ -153,8 +159,9 @@
       </nav>
     </header>
 
-    <textarea id="textEditor" autofocus spellcheck="true"
-              aria-label="Text Editor"></textarea>
+    <!--textarea id="textEditor" autofocus spellcheck="true"
+              aria-label="Text Editor"></textarea-->
+    <div id="notebookEditor"></div>
 
     <a id="aDownloadFile" download></a>
     <input type="file" id="filePicker">
@@ -174,15 +181,15 @@
         in legacy mode. In legacy mode, the file modified indicators are not shown.
       </div>
       <div>
-        Text Editor is a simple text editor similar to notepad that makes
-        it easy to edit text files on your local file system. It shows how
+        API Notebook Editor is a simple poc similar to notepad that makes
+        it easy to .notebook.md files on your local file system. It shows how
         to easily use the new HTML5 File System Access APIs. To learn more
         about the File System Access APIs and how this demo was built, check out
         <a href="https://web.dev/file-system-access/" target="_blank">
         The file system access APIs</a> article on Web Fundamentals, or see the
-        <a href="https://github.com/GoogleChromeLabs/text-editor/" target="_blank">
+        <a href="https://github.com/apinotebooks/text-editor" target="_blank">
         source code on GitHub</a>.
-        Written by <a href="https://twitter.com/petele" target="_blank">Pete LePage</a>.
+        Written by <a href="https://twitter.com/petele" target="_blank">Pete LePage</a> and <a href="https://twitter.com/adenin" target="_blank">adenin</a>.
         <small id="lastUpdated">
           Last Updated: [[BUILD_DATE]] (v[[VERSION]])
         </small>

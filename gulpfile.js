@@ -209,6 +209,7 @@ function buildHTML() {
 function copyStatic() {
   const filesToCopy = [
     `${TEMP_DIR}/index.html`,
+    `${SRC_DIR}/libs/**/*`,
     `${SRC_DIR}/icons/**/*`,
     `${SRC_DIR}/images/**/*`,
     `${SRC_DIR}/sounds/**/*`,
@@ -244,10 +245,10 @@ exports.buildProd = series(
  *****************************************************************************/
 
 function serveDev() {
-  return connect.server({root: 'src'});
+  return connect.server({root: 'src', port: 7000});
 }
 function serveProd() {
-  return connect.server({root: 'build'});
+  return connect.server({root: 'build', port: 7000});
 }
 
 exports.serve = serveDev;
