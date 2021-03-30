@@ -58,7 +58,7 @@
       // create new instance
       const el = new StarboardNotebookIFrame({
         notebookContent: val,
-        debug: true,
+        debug: false,
         src: "https://apinotebooks-sandbox.netlify.app"
       });
 
