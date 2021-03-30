@@ -16,34 +16,34 @@
 
 'use strict';
 
-(function(app) {
+(function (app) {
   const textArea = document.getElementById('textEditor');
 
-/*
-  // Setup the main textarea 
-  textArea.addEventListener('input', () => {
-    app.setModified(true);
-  });
-
-  // Hide menus any time we start typing 
-  textArea.addEventListener('focusin', () => {
-    myMenus.hideAll();
-  });
-
-  // Listen for tab key 
-  textArea.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab' && app.options.captureTabs) {
-      e.preventDefault();
-      app.insertIntoDoc('\t');
-    }
-  });
-
-  // Initialize the textarea, set focus & font size 
-  window.addEventListener('DOMContentLoaded', () => {
-    textArea.style.fontSize = `${app.options.fontSize}px`;
-    app.setFocus();
-  });
-*/
+  /*
+    // Setup the main textarea 
+    textArea.addEventListener('input', () => {
+      app.setModified(true);
+    });
+  
+    // Hide menus any time we start typing 
+    textArea.addEventListener('focusin', () => {
+      myMenus.hideAll();
+    });
+  
+    // Listen for tab key 
+    textArea.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab' && app.options.captureTabs) {
+        e.preventDefault();
+        app.insertIntoDoc('\t');
+      }
+    });
+  
+    // Initialize the textarea, set focus & font size 
+    window.addEventListener('DOMContentLoaded', () => {
+      textArea.style.fontSize = `${app.options.fontSize}px`;
+      app.setFocus();
+    });
+  */
 
   /**
    * Sets the text of the editor to the specified value
@@ -53,16 +53,25 @@
   app.setText = (val) => {
     val = val || '';
     const mount = document.querySelector("#notebookEditor");
-    mount.innerHTML="";
-    const el = new StarboardNotebookIFrame({
+    var sb = document.getElementById("notebookSandbox");
+    if (!sb) {
+      // create new instance
+      const el = new StarboardNotebookIFrame({
         notebookContent: val,
+        debug: true,
         src: "https://apinotebooks-sandbox.netlify.app"
-    });
+      });
 
-    el.style.width = "100%";
-    el.id="notebookSandbox";
-    mount.appendChild(el);
-    
+      el.style.width = "100%";
+      el.id = "notebookSandbox";
+      mount.appendChild(el);
+    } else {
+      // reload instance with new content      
+      sb.notebookContent = val;    
+      sb.sendMessage({
+      type: "NOTEBOOK_RELOAD_PAGE"
+    });
+    }
     // textArea.value = val;
   };
 
@@ -73,7 +82,7 @@
    */
   app.getText = () => {
     var sb = document.getElementById("notebookSandbox");
-    var content = sb?.notebookContent || "";    
+    var content = sb?.notebookContent || "";
     return content;
   };
 
