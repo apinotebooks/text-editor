@@ -1,9 +1,9 @@
 ---
 title: Hello, world notebook.
-date: Last Modified 
+date: Last Modified
 permalink: /notebook1/index.html
 eleventyNavigation:
-  key: notebook1 
+  key: notebook1
   order: 0
   title: Notebook1
 ---
@@ -29,22 +29,23 @@ const today = new Date().toISOString().slice(0,10); // Today in yyyy-mm-dd forma
 const data = await fetch(`https://api.exchangerate.host/timeseries?start_date=2020-01-01&end_date=${today}`);
 
 // var puts it in the global scope (so we can use it in the next cell)
-var jsonData = await data.json();
-jsonData
+runtime.variables.jsonData = await data.json();
+
 ```
 ```javascript {"run_on_load":true}
 // Chart.js creates a global `Chart` object when it is loaded.
 await import("https://unpkg.com/chart.js@2.9.3/dist/Chart.bundle.min.js");
 
 const canvas = document.createElement("canvas");
+const rates = runtime.variables.jsonData.rates;
 const currencyChart = new Chart(canvas.getContext("2d"),
     {
         type: "line",
         data: {
-            labels: Object.keys(jsonData.rates),
+            labels: Object.keys(rates),
             datasets: [{
                 label: 'Euro - US Dollar',
-                data: Object.values(jsonData.rates).map(c => c.USD),
+                data: Object.values(rates).map(c => c.USD),
                 borderColor: "#5558ff",
                 backgroundColor: "#5558ff80",
             }],

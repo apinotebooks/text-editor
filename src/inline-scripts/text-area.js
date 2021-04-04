@@ -148,7 +148,7 @@
     window.authClient = new jso.JSO({
       connector_name: frontmatter.ConnectorName,
       client_id: frontmatter._ClientId,
-      redirect_uri: window.location.href + "popupCallback.html",
+      redirect_uri: window.location.origin + "/popupCallback.html",
       authorization: frontmatter._AccessCodeServiceEndpoint,
       token: frontmatter._AccessTokenServiceEndpoint,
 

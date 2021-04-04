@@ -172,7 +172,7 @@
 
   <!--textarea id="textEditor" autofocus spellcheck="true"
               aria-label="Text Editor"></textarea-->
-  <sl-alert type="warning"  id="loginBox" class="hidden">
+  <sl-alert type="warning" id="loginBox" class="hidden">
     <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
     <strong id="loginMsg">Your session has ended</strong><br>
     Please <span class="action">login</span> to continue.
@@ -233,6 +233,18 @@
   <script src="/inline-scripts/load-sw.js" inline></script>
   <script src="/inline-scripts/app-install.js" inline></script>
   <script src="/inline-scripts/fallback.js" inline></script>
+
+  <script>
+    // load default content from url
+    if (window.location.search && window.location.search.startsWith("?http")) {
+      async function loadContent() {
+        var req = await fetch(window.location.search.substring(1));
+        var content = await req.text();
+        app.setText(content);
+      }
+      loadContent();
+    }
+  </script>
 </body>
 
 </html>
