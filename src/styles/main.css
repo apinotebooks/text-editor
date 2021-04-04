@@ -202,6 +202,17 @@ body.wordwrap textarea {
   white-space: normal;
 }
 
+.action {
+  text-decoration: none;
+  color: var(--sl-color-primary-500);
+}
+
+#loginBox {
+  cursor: pointer;
+  margin:16px;
+  max-width:950px;
+}
+
 /********************
  * Legacy download & upload elements
  *******************/

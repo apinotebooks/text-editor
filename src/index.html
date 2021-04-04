@@ -17,103 +17,114 @@
   Author: Pete LePage (petele@google.com)
 -->
 <html lang="en">
-  <head>
-    <title>Text Editor</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- SEO description and info -->
-    <meta name="description" content="Text Editor - Demo for the HTML5 File System Access.">
-    <link rel="canonical" href="https://googlechromelabs.github.io/text-editor/">
+<head>
+  <title>Text Editor</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Manifest and icons -->
-    <link rel="manifest" href="./manifest.json">
-    <link rel="icon" type="image/png" href="./images/favicon.png">
-    <meta name="theme-color" content="#1a237e">
-    <link rel="apple-touch-icon" sizes="192x192" href="./images/icon-192.png">
+  <!-- SEO description and info -->
+  <meta name="description" content="Text Editor - Demo for the HTML5 File System Access.">
+  <link rel="canonical" href="https://googlechromelabs.github.io/text-editor/">
 
-    <!-- Add to homescreen for Chrome on Android. -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Text Edit">
+  <!-- Manifest and icons -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./images/favicon.png">
+  <meta name="theme-color" content="#1a237e">
+  <link rel="apple-touch-icon" sizes="192x192" href="./images/icon-192.png">
 
-    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="./images/icon-144.png">
-    <meta name="msapplication-TileColor" content="#1a237e">
-    <meta name="msapplication-tap-highlight" content="no">
+  <!-- Add to homescreen for Chrome on Android. -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Text Edit">
 
-    <!-- Default twitter cards -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:url" content="https://googlechromelabs.github.io/text-editor/">
-    <meta name="twitter:title" content="Text Editor">
-    <meta name="twitter:description" content="Text Editor - Demo for the HTML5 File System Access API.">
-    <meta name="twitter:image" content="./images/icon-192.png">
-    <meta name="twitter:creator" content="@petele">
+  <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="./images/icon-144.png">
+  <meta name="msapplication-TileColor" content="#1a237e">
+  <meta name="msapplication-tap-highlight" content="no">
 
-    <!-- Other sharing -->
-    <meta property="og:title" content="Text Editor">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="./images/icon-192.png">
-    <meta property="og:url" content="https://googlechromelabs.github.io/text-editor/">
-    <meta property="og:description" content="Text Editor - Demo for the HTML5 File System Access API.">
+  <!-- Default twitter cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://googlechromelabs.github.io/text-editor/">
+  <meta name="twitter:title" content="Text Editor">
+  <meta name="twitter:description" content="Text Editor - Demo for the HTML5 File System Access API.">
+  <meta name="twitter:image" content="./images/icon-192.png">
+  <meta name="twitter:creator" content="@petele">
 
-    <!-- Analytics -->
-    <script src="/inline-scripts/analytics.js" inline></script>
+  <!-- Other sharing -->
+  <meta property="og:title" content="Text Editor">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./images/icon-192.png">
+  <meta property="og:url" content="https://googlechromelabs.github.io/text-editor/">
+  <meta property="og:description" content="Text Editor - Demo for the HTML5 File System Access API.">
 
-    <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/styles/main.css" inline>
-    <link rel="stylesheet" href="/styles/standalone.css" inline>
-    <link rel="stylesheet" media="print" href="/styles/print.css" inline>
+  <!-- Analytics -->
+  <script src="/inline-scripts/analytics.js" inline></script>
 
-    <script type="module">
-      import {StarboardNotebookIFrame} from "../libs/notebook-sandbox.js"
-      window.StarboardNotebookIFrame = StarboardNotebookIFrame;
-    </script>
+  <!-- import the webpage's stylesheet -->
+  <link rel="stylesheet" href="/styles/main.css" inline>
+  <link rel="stylesheet" href="/styles/standalone.css" inline>
+  <link rel="stylesheet" media="print" href="/styles/print.css" inline>
 
-    <!-- Origin Trial Token NFS API v1 (expires 2020-05-12) - ->
+  <script type="module">
+    import { StarboardNotebookIFrame } from "../libs/notebook-sandbox.js"
+    window.StarboardNotebookIFrame = StarboardNotebookIFrame;
+  </script>
+
+  <script src="libs/js-yaml.js"></script>
+  <script src="libs/jso.js"></script>
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.36/dist/themes/base.css">
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.36/dist/shoelace.js"></script>
+
+
+  <!-- Origin Trial Token NFS API v1 (expires 2020-05-12) - ->
     <meta http-equiv="origin-trial" content="ApP5hRHS+dIxGdu/1psSHsErxROE+aVFGqdUwBgrcsGuwWDpPo3iqanpH3EdEie7YHhBN0LL1sdkT89waJPbzwsAAABkeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZWNocm9tZWxhYnMuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJOYXRpdmVGaWxlU3lzdGVtIiwiZXhwaXJ5IjoxNTg5MzI3OTk5fQ==">
     <!-- Origin Trial Token NFS API v2 (expires 2020-05-25) - ->
     <meta http-equiv="origin-trial" content="AouXz9/sqzYGRIFkw8KK0QXp0HOo99+Pg8NAr/4pRA1pAlaTeQ6BngqqkBUzfjvxzPcRf15pmieR4RDhJB9bKwAAAABleyJvcmlnaW4iOiJodHRwczovL2dvb2dsZWNocm9tZWxhYnMuZ2l0aHViLmlvOjQ0MyIsImZlYXR1cmUiOiJOYXRpdmVGaWxlU3lzdGVtMiIsImV4cGlyeSI6MTU5MDQxNzc1NX0=">
     -->
-  </head>
-  <body class="wordwrap">
+</head>
 
-    <header>
-      <h1>
-        <span id="headerFileName">API Notebook</span><span id="modifiedHeader" class="hidden">*</span>
-        <span id="headerAppName" class="hidden"> - API Notebook</span>
-      </h1>
-      <nav class="menubar">
-        <div id="menuFile" class="menuContainer">
-          <button id="butFile" class="menuTop" aria-label="File" aria-haspopup="true" aria-expanded="false">
-            <span class="kbdShortcut">F</span>ile
+<body class="wordwrap">
+
+  <header>
+    <h1>
+      <span id="headerFileName">API Notebook</span><span id="modifiedHeader" class="hidden">*</span>
+      <span id="headerAppName" class="hidden"> - API Notebook</span>
+    </h1>
+    <nav class="menubar">
+      <div id="menuFile" class="menuContainer">
+        <button id="butFile" class="menuTop" aria-label="File" aria-haspopup="true" aria-expanded="false">
+          <span class="kbdShortcut">F</span>ile
+        </button>
+        <div role="menu" class="menuItemContainer hidden">
+          <button id="butNew" type="button" role="menuitem">
+            New <kbd>^N</kbd>
           </button>
-          <div role="menu" class="menuItemContainer hidden">
-            <button id="butNew" type="button" role="menuitem">
-              New <kbd>^N</kbd>
-            </button>
-            <button id="butOpen" type="button" role="menuitem">
-              Open <kbd>^O</kbd>
-            </button>
-            <button id="butSave" type="button" role="menuitem">
-              Save <kbd>^S</kbd>
-            </button>
-            <button id="butSaveAs" type="button" role="menuitem">
-              Save As <kbd>^&uparrow;S</kbd>
-            </button>
-            <button id="butClose" type="button" role="menuitem">
-              Close <kbd>^W</kbd>
-            </button>
-          </div>
-        </div>
-        <div id="menuRecent" class="menuContainer">
-          <button id="butRecent" class="menuTop" aria-label="Recent" aria-haspopup="true" aria-expanded="false">
-            <span class="kbdShortcut">R</span>ecent
+          <button id="butOpen" type="button" role="menuitem">
+            Open <kbd>^O</kbd>
           </button>
-          <div id="recentContainer" role="menu" class="menuItemContainer hidden">
-          </div>
+          <button id="butSave" type="button" role="menuitem">
+            Save <kbd>^S</kbd>
+          </button>
+          <button id="butSaveAs" type="button" role="menuitem">
+            Save As <kbd>^&uparrow;S</kbd>
+          </button>
+          <button id="butClose" type="button" role="menuitem">
+            Close <kbd>^W</kbd>
+          </button>
         </div>
-        <div id="menuEdit" class="menuContainer">
+      </div>
+      <div id="menuRecent" class="menuContainer">
+        <button id="butRecent" class="menuTop" aria-label="Recent" aria-haspopup="true" aria-expanded="false">
+          <span class="kbdShortcut">R</span>ecent
+        </button>
+        <div id="recentContainer" role="menu" class="menuItemContainer hidden">
+        </div>
+      </div>
+      <!-- div id="menuEdit" class="menuContainer">
           <button id="butEdit" class="menuTop" aria-label="Edit" aria-haspopup="true" aria-expanded="false">
               <span class="kbdShortcut">E</span>dit
           </button>
@@ -128,8 +139,8 @@
               Paste <kbd>^V</kbd>
             </button>
           </div>
-        </div>
-        <div id="menuView" class="menuContainer">
+        </div -->
+      <!-- div id="menuView" class="menuContainer">
           <button id="butView" class="menuTop" aria-label="View" aria-haspopup="true" aria-expanded="false">
               <span class="kbdShortcut">V</span>iew
           </button>
@@ -150,71 +161,78 @@
               Decrease Font Size
             </button>
           </div>
-        </div>
-        <div id="menuInstall" class="menuContainer">
-          <button id="butInstall" aria-label="Install" class="menuTop hidden">
-              <span class="kbdShortcut">I</span>nstall
-          </button>
-        </div>
-      </nav>
-    </header>
+        </div -->
+      <div id="menuInstall" class="menuContainer">
+        <button id="butInstall" aria-label="Install" class="menuTop hidden">
+          <span class="kbdShortcut">I</span>nstall
+        </button>
+      </div>
+    </nav>
+  </header>
 
-    <!--textarea id="textEditor" autofocus spellcheck="true"
+  <!--textarea id="textEditor" autofocus spellcheck="true"
               aria-label="Text Editor"></textarea-->
-    <div id="notebookEditor"></div>
+  <sl-alert type="warning"  id="loginBox" class="hidden">
+    <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+    <strong id="loginMsg">Your session has ended</strong><br>
+    Please <span class="action">login</span> to continue.
+  </sl-alert>
+  <div id="notebookEditor"></div>
 
-    <a id="aDownloadFile" download></a>
-    <input type="file" id="filePicker">
+  <a id="aDownloadFile" download></a>
+  <input type="file" id="filePicker">
 
-    <details id="footer" class="footer">
-      <summary>About
-        <span>
-          <span id="modifiedFooter" class="hidden">*</span>
-          <span id="lblLegacyFS" class="hidden footer-label">Legacy Mode</span>
-          <span id="lblTabMovesFocus" class="hidden footer-label">Tab Moves Focus</span>
-        </span>
-      </summary>
-      <div id="not-supported">
-        The
-        <a href="https://wicg.github.io/file-system-access/" target="_blank">File System Access API</a>
-        is <b>not</b> supported in this browser yet, and Text Editor is running
-        in legacy mode. In legacy mode, the file modified indicators are not shown.
-      </div>
-      <div>
-        API Notebook Editor is a simple poc similar to notepad that makes
-        it easy to .notebook.md files on your local file system. It shows how
-        to easily use the new HTML5 File System Access APIs. To learn more
-        about the File System Access APIs and how this demo was built, check out
-        <a href="https://web.dev/file-system-access/" target="_blank">
+  <details id="footer" class="footer">
+    <summary>About
+      <span>
+        <span id="modifiedFooter" class="hidden">*</span>
+        <span id="lblLegacyFS" class="hidden footer-label">Legacy Mode</span>
+        <span id="lblTabMovesFocus" class="hidden footer-label">Tab Moves Focus</span>
+      </span>
+    </summary>
+    <div id="not-supported">
+      The
+      <a href="https://wicg.github.io/file-system-access/" target="_blank">File System Access API</a>
+      is <b>not</b> supported in this browser yet, and Text Editor is running
+      in legacy mode. In legacy mode, the file modified indicators are not shown.
+    </div>
+    <div>
+      API Notebook Editor is a simple poc similar to notepad that makes
+      it easy to .notebook.md files on your local file system. It shows how
+      to easily use the new HTML5 File System Access APIs. To learn more
+      about the File System Access APIs and how this demo was built, check out
+      <a href="https://web.dev/file-system-access/" target="_blank">
         The file system access APIs</a> article on Web Fundamentals, or see the
-        <a href="https://github.com/apinotebooks/text-editor" target="_blank">
+      <a href="https://github.com/apinotebooks/text-editor" target="_blank">
         source code on GitHub</a>.
-        Written by <a href="https://twitter.com/petele" target="_blank">Pete LePage</a> and <a href="https://twitter.com/adenin" target="_blank">adenin</a>.
-        <small id="lastUpdated">
-          Last Updated: [[BUILD_DATE]] (v[[VERSION]])
-        </small>
-      </div>
-    </details>
+      Written by <a href="https://twitter.com/petele" target="_blank">Pete LePage</a> and <a
+        href="https://twitter.com/adenin" target="_blank">adenin</a>.
+      <small id="lastUpdated">
+        Last Updated: [[BUILD_DATE]] (v[[VERSION]])
+      </small>
+    </div>
+  </details>
 
-    <!-- import the webpage's javascript file -->
-    <!-- <script src="/inline-scripts/base.js" inline></script> -->
-    <script src="/inline-scripts/idb-keyval-iife.js" inline></script>
+  <!-- import the webpage's javascript file -->
+  <!-- <script src="/inline-scripts/base.js" inline></script> -->
+  <script src="/inline-scripts/idb-keyval-iife.js" inline></script>
 
-    <script src="/inline-scripts/rum.js" inline></script>
-    <script src="/inline-scripts/app.js" inline></script>
+  <script src="/inline-scripts/rum.js" inline></script>
+  <script src="/inline-scripts/app.js" inline></script>
 
-    <script src="/inline-scripts/menus.js" inline></script>
+  <script src="/inline-scripts/menus.js" inline></script>
 
-    <script src="/inline-scripts/text-area.js" inline></script>
-    <script src="/inline-scripts/fs-helpers.js" inline></script>
-    <script src="/inline-scripts/menu-file.js" inline></script>
-    <script src="/inline-scripts/menu-edit.js" inline></script>
-    <script src="/inline-scripts/menu-view.js" inline></script>
-    <script src="/inline-scripts/menu-recent.js" inline></script>
-    <script src="/inline-scripts/ui.js" inline></script>
-    <script src="/inline-scripts/keyboard-events.js" inline></script>
-    <script src="/inline-scripts/load-sw.js" inline></script>
-    <script src="/inline-scripts/app-install.js" inline></script>
-    <script src="/inline-scripts/fallback.js" inline></script>
-  </body>
+  <script src="/inline-scripts/text-area.js" inline></script>
+  <script src="/inline-scripts/fs-helpers.js" inline></script>
+  <script src="/inline-scripts/menu-file.js" inline></script>
+  <script src="/inline-scripts/menu-edit.js" inline></script>
+  <script src="/inline-scripts/menu-view.js" inline></script>
+  <script src="/inline-scripts/menu-recent.js" inline></script>
+  <script src="/inline-scripts/ui.js" inline></script>
+  <script src="/inline-scripts/keyboard-events.js" inline></script>
+  <script src="/inline-scripts/load-sw.js" inline></script>
+  <script src="/inline-scripts/app-install.js" inline></script>
+  <script src="/inline-scripts/fallback.js" inline></script>
+</body>
+
 </html>

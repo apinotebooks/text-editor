@@ -25,11 +25,13 @@ const myMenus = {};
  * @param {Element} container Container element with the drop down menu.
  */
 myMenus.setup = (container) => {
+  
   const toggleButton = container.querySelector('button.menuTop');
   toggleButton.addEventListener('click', () => {
     myMenus._toggle(toggleButton);
-  });
+  });  
   myMenus.addKeyboardShortcut(toggleButton);
+  
   container.addEventListener('keydown', (e) => {
     if (e.keyCode === 27) {
       myMenus.hideAll();

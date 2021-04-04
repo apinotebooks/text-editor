@@ -52,12 +52,59 @@
    */
   app.setText = (val) => {
     val = val || '';
+    app.notebookContent = val;
+    var variables = {};
     const mount = document.querySelector("#notebookEditor");
+    const loginBox = document.getElementById("loginBox");
+    const loginMsg = document.getElementById("loginMsg");
+
     var sb = document.getElementById("notebookSandbox");
+    if (sb) sb.classList.toggle("hidden", true);
+
+    var nbRequiresLogin = app.notebookRequiresLogin(val);
+    if (nbRequiresLogin) {
+      var token = authClient.getToken();
+
+      if (token) {
+        variables.token = token.access_token;
+      } else {
+
+        // setup auth event listener
+        if (!app._authSetup) {
+
+          // start oauth2 flow
+          loginBox.addEventListener("click", (event) => {
+            authClient.authorize();
+          });
+
+          // oauth token received
+          window.addEventListener("message", (event) => {
+            
+            if (event.data.status == "oauth_callback_ok") {             
+              authClient.callback(event.data.href).then((token) => {
+               app.setText(app.notebookContent);
+              });              
+            } 
+          });
+
+          app._authSetup = true;
+        }
+
+        loginMsg.innerText = "This notebook is connected with " + authClient.getconnector_name();
+        loginBox.classList.toggle("hidden", false);
+        loginBox.toggleAttribute("open", true);
+
+        return;
+      }
+    }
+
+    loginBox.toggleAttribute("open", false);
+
     if (!sb) {
       // create new instance
       const el = new StarboardNotebookIFrame({
         notebookContent: val,
+        notebookVariables: variables,
         debug: false,
         src: "https://apinotebooks-sandbox.netlify.app"
       });
@@ -67,12 +114,51 @@
       mount.appendChild(el);
     } else {
       // reload instance with new content      
-      sb.notebookContent = val;    
+      sb.notebookContent = val;
+      sb.notebookVariables = variables;
       sb.sendMessage({
-      type: "NOTEBOOK_RELOAD_PAGE"
-    });
+        type: "NOTEBOOK_RELOAD_PAGE"
+      });
+      sb.classList.toggle("hidden", false);
     }
     // textArea.value = val;
+  };
+
+  app.notebookRequiresLogin = (val) => {
+
+    if (!val.startsWith("---\n")) return false;
+    val = val.substring(4); // remove leading ---
+    const end = val.indexOf("---\n");
+    if (end < 1) return false; // no trailing ---
+
+    val = val.substring(0, end);
+    var frontmatter = jsyaml.load(val);
+
+    // check required fields for OAuth2 PKCE
+    if ((!!frontmatter.ConnectorName &&
+      !!frontmatter._ClientId &&
+      !!frontmatter._AccessCodeServiceEndpoint &&
+      !!frontmatter._AccessTokenServiceEndpoint &&
+      !!frontmatter._Scopes) == false) return;
+
+    // replace , and double spaces with single space
+    var scopes = frontmatter._Scopes.split(",").join(" ").split("  ").join(" ").split(" ");
+
+    // setup authClient
+    window.authClient = new jso.JSO({
+      connector_name: frontmatter.ConnectorName,
+      client_id: frontmatter._ClientId,
+      redirect_uri: window.location.href + "popupCallback.html",
+      authorization: frontmatter._AccessCodeServiceEndpoint,
+      token: frontmatter._AccessTokenServiceEndpoint,
+
+      response_type: "code",
+      scopes: scopes,
+
+      debug: true
+    });
+
+    return true;
   };
 
   /**

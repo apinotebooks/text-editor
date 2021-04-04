@@ -17,6 +17,9 @@
 'use strict';
 
 (function(app) {
+
+  return;
+
   const menuEdit = document.getElementById('menuEdit');
   myMenus.setup(menuEdit);
 

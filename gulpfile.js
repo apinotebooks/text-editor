@@ -245,10 +245,10 @@ exports.buildProd = series(
  *****************************************************************************/
 
 function serveDev() {
-  return connect.server({root: 'src', port: 7000});
+  return connect.server({root: 'src', port: 3000});
 }
 function serveProd() {
-  return connect.server({root: 'build', port: 7000});
+  return connect.server({root: 'build', port: 3000});
 }
 
 exports.serve = serveDev;

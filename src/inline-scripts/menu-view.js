@@ -17,6 +17,9 @@
 'use strict';
 
 (function(app) {
+
+  return;
+
   const menuView = document.getElementById('menuView');
   myMenus.setup(menuView);
 
