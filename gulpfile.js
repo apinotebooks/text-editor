@@ -227,12 +227,15 @@ exports.buildCSS = buildCSS;
 exports.buildJS = buildJS;
 exports.buildHTML = buildHTML;
 exports.copyStatic = copyStatic;
+
 exports.build = series(
     clean,
     parallel(copyHTML, buildCSS, buildJS),
     buildHTML,
-    copyStatic
+    copyStatic,
+    generateServiceWorker
 );
+
 exports.buildProd = series(
     clean,
     parallel(copyHTML, buildCSS, buildJS),
