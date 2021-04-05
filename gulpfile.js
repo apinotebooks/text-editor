@@ -179,6 +179,7 @@ function buildJS() {
 function copyHTML() {
   const filesToCopy = [
     `${SRC_DIR}/index.html`,
+    `${SRC_DIR}/popupCallback.html`,
   ];
   return gulp.src(filesToCopy)
       .pipe(copy(TEMP_DIR, {prefix: 1}));
@@ -209,6 +210,7 @@ function buildHTML() {
 function copyStatic() {
   const filesToCopy = [
     `${TEMP_DIR}/index.html`,
+    `${SRC_DIR}/popupCallback.html`,
     `${SRC_DIR}/libs/**/*`,
     `${SRC_DIR}/icons/**/*`,
     `${SRC_DIR}/images/**/*`,

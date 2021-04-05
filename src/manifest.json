@@ -1,7 +1,7 @@
 {
-  "name": "Text Editor",
-  "short_name": "TextEdit",
-  "description": "Text Editor - Demo for the HTML5 File System Access API.",
+  "name": "API Notebooks Editor",
+  "short_name": "API Notebook",
+  "description": "API Notebooks Editor",
   "start_url": "./",
   "display": "standalone",
   "theme_color": "#1a237e",
