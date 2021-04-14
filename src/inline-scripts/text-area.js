@@ -66,7 +66,7 @@
       var token = authClient.getToken();
 
       if (token) {
-        variables.token = token.access_token;
+        variables._token = token.access_token;
       } else {
 
         // setup auth event listener

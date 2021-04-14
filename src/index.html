@@ -238,7 +238,14 @@
     // load default content from url
     if (window.location.search && window.location.search.startsWith("?http")) {
       async function loadContent() {
-        var req = await fetch(window.location.search.substring(1));
+        var url = window.location.search.substring(1);
+        
+        // switch to raw view in github
+        if(url.startsWith("https://github.com/")) {  
+            url = url.replace("https://github.com/","https://raw.githubusercontent.com/");
+            url = url.replace("/blob/","/");
+        }
+        var req = await fetch(url);
         var content = await req.text();
         app.setText(content);
       }

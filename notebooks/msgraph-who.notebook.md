@@ -11,7 +11,7 @@ _Scopes: User.Read
 var response = await fetch("https://graph.microsoft.com/v1.0/me", { 
   'credentials': 'omit',
   headers: {    
-    'Authorization': 'Bearer ' + runtime.variables.token
+    'Authorization': 'Bearer ' + runtime.variables._token
   }
 });
 
