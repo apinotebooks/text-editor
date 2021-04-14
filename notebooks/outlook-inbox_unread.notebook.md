@@ -3,7 +3,7 @@ ConnectorName: o365
 _ClientId: b75fd212-b8ef-44ce-8e3c-585419557ea7
 _AccessCodeServiceEndpoint: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
 _AccessTokenServiceEndpoint: https://login.microsoftonline.com/common/oauth2/v2.0/token
-_Scopes: User.Read
+_Scopes: User.Read Mail.Read 
 ---
 ```json adaptive-form {"run_on_load":true}
 {
