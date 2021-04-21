@@ -141,7 +141,7 @@
       !!frontmatter._AccessTokenServiceEndpoint) == false) return;
 
     // replace , and double spaces with single space
-    var scopes = frontmatter._Scopes.split(",").join(" ").split("  ").join(" ").split(" ");
+    var scopes = (frontmatter._Scopes||"").split(",").join(" ").split("  ").join(" ").split(" ");
 
     // setup authClient
     window.authClient = new jso.JSO({
