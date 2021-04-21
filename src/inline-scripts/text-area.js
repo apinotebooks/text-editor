@@ -138,8 +138,7 @@
     if ((!!frontmatter.ConnectorName &&
       !!frontmatter._ClientId &&
       !!frontmatter._AccessCodeServiceEndpoint &&
-      !!frontmatter._AccessTokenServiceEndpoint &&
-      !!frontmatter._Scopes) == false) return;
+      !!frontmatter._AccessTokenServiceEndpoint) == false) return;
 
     // replace , and double spaces with single space
     var scopes = frontmatter._Scopes.split(",").join(" ").split("  ").join(" ").split(" ");
