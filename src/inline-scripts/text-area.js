@@ -52,6 +52,7 @@
    */
   app.setText = (val) => {
     val = val || '';
+    val = val.split("\r\n").join("\n");
     app.notebookContent = val;
     var variables = {};
     const mount = document.querySelector("#notebookEditor");
