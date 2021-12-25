@@ -62,7 +62,13 @@
     var sb = document.getElementById("notebookSandbox");
     if (sb) sb.classList.toggle("hidden", true);
 
-    var nbRequiresLogin = app.notebookRequiresLogin(val);
+    var frontmatter = app.getFrontmatter(val);
+    variables.config = {};
+    variables.config.url = frontmatter.url || "";
+    variables.config.connector = frontmatter.ConnectorName || frontmatter._ProdToken || "";
+    variables.config.scopes = frontmatter.scopes || frontmatter._Scopes || "";
+
+    var nbRequiresLogin = app.notebookRequiresLogin(frontmatter);
     if (nbRequiresLogin) {
       var token = authClient.getToken();
 
@@ -125,15 +131,21 @@
     // textArea.value = val;
   };
 
-  app.notebookRequiresLogin = (val) => {
-
-    if (!val.startsWith("---\n")) return false;
+  app.getFrontmatter = (val) => {
+    if (!val.startsWith("---\n")) return null;
     val = val.substring(4); // remove leading ---
     const end = val.indexOf("---\n");
-    if (end < 1) return false; // no trailing ---
+    if (end < 1) return null; // no trailing ---
 
     val = val.substring(0, end);
     var frontmatter = jsyaml.load(val);
+
+    return frontmatter;
+  }
+
+  app.notebookRequiresLogin = (frontmatter) => {
+
+    if(!frontmatter) return false;
 
     // check required fields for OAuth2 PKCE
     if ((!!frontmatter.ConnectorName &&
@@ -142,7 +154,7 @@
       !!frontmatter._AccessTokenServiceEndpoint) == false) return;
 
     // replace , and double spaces with single space
-    var scopes = (frontmatter._Scopes||"").split(",").join(" ").split("  ").join(" ").split(" ");
+    var scopes = (frontmatter.scopes || frontmatter._Scopes || "").split(",").join(" ").split("  ").join(" ").split(" ");
 
     // setup authClient
     window.authClient = new jso.JSO({
